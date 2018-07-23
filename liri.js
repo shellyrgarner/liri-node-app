@@ -63,20 +63,22 @@ function getSpotify() {
 
 //OMDB
 function getMovie() {
-    var nodeArgs = process.argv[3];
-    // var movieName = "";
-    var search = " ";
+
+    var nodeArgs = process.argv;
+    var movieName = "";
 
     for (var i = 3; i < nodeArgs.length; i++) {
-           search += nodeArgs[i] + " ";
-            console.log("moviename: " + search);
-            console.log(i);
+        if (i > 3 && i < nodeArgs.length) {  
+          movieName = movieName + "+" + nodeArgs[i];
+          console.log(movieName)
+          console.log(i)      
+        }      
+        else {
+         movieName += nodeArgs[i];      
         }
-    }
-    
-     search = search.split(' ').join('+');
+      }      
 
-    var queryURL = "http://www.omdbapi.com/?t=" + search + "&y=&plot=short&apikey=trilogy";
+    var queryURL = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
     // var queryURL = "http://www.omdbapi.com/?t=forrest+gump&y=&plot=short&apikey=trilogy";
     console.log("queryURL: " + queryURL);
 
@@ -99,12 +101,10 @@ function getMovie() {
                 console.log("Language: " + JSON.parse(body).Language);
                 console.log("Plot: " + JSON.parse(body).Plot);
                 console.log("Actors: " + JSON.parse(body).Actors);
-                // console.log(search);
-                // console.log(response);
             }
         }
     });
-
+}
 
 //random.txt file call
 function getRandom() {
