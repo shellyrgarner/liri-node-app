@@ -40,19 +40,24 @@ function getTweets() {
             console.log(error);
         }
         else {
-            console.log(tweets);
-            // console.log(response);
+            for (var i = 0; i < tweets.length; i++) {
+                console.log(tweets[i].created_at);
+                console.log(tweets[i].text);
+                
+            }
         }
-    });
+    })
 }
+
 //spotify
 function getSpotify() {
-    var song;
-    spotify.search({ type: 'track', query: 'search' }, function (err, data) {
+    var search = process.argv[3];
+    spotify.search({ type: 'track', query: search }, function (err, data) {
         if (err) {
-            console.log(error);
+            console.log("Error Occurred: " + err);
         }
         else {
+            console.log("data: " + data);
             console.log(data);
             // console.log(response);
         }
@@ -68,15 +73,15 @@ function getMovie() {
     var movieName = "";
 
     for (var i = 3; i < nodeArgs.length; i++) {
-        if (i > 3 && i < nodeArgs.length) {  
-          movieName = movieName + "+" + nodeArgs[i];
-          console.log(movieName)
-          console.log(i)      
-        }      
-        else {
-         movieName += nodeArgs[i];      
+        if (i > 3 && i < nodeArgs.length) {
+            movieName = movieName + "+" + nodeArgs[i];
+            console.log(movieName)
+            console.log(i)
         }
-      }      
+        else {
+            movieName += nodeArgs[i];
+        }
+    }
 
     var queryURL = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
     // var queryURL = "http://www.omdbapi.com/?t=forrest+gump&y=&plot=short&apikey=trilogy";
