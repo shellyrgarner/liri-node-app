@@ -43,7 +43,7 @@ function getTweets() {
             for (var i = 0; i < tweets.length; i++) {
                 console.log(tweets[i].created_at);
                 console.log(tweets[i].text);
-                
+
             }
         }
     })
@@ -51,7 +51,28 @@ function getTweets() {
 
 //spotify
 function getSpotify() {
-    var search = process.argv[3];
+    var nodeArgs = process.argv;
+    var search = "";
+    var song = process.argv[3];
+    var songDefault = "The Sign Ace of Base";
+    if (!song) {
+        search = songDefault;
+        // console.log(search);
+    }
+    else {
+        for (var i = 3; i < nodeArgs.length; i++) {
+            if (i > 3 && i < nodeArgs.length) {
+                search = search + "+" + nodeArgs[i];
+                // console.log(search)
+                // console.log(i)
+            }
+            else {
+                search += nodeArgs[i];
+                // console.log(search)
+            }
+        }
+    }
+
     spotify.search({ type: 'track', query: search }, function (err, data) {
         if (err) {
             console.log("Error Occurred: " + err);
@@ -64,28 +85,32 @@ function getSpotify() {
     });
 }
 
-
-
 //OMDB
 function getMovie() {
-
     var nodeArgs = process.argv;
     var movieName = "";
+    var movieDefault = "Mr. Nobody";
+    var movie = process.argv[3];
 
-    for (var i = 3; i < nodeArgs.length; i++) {
-        if (i > 3 && i < nodeArgs.length) {
-            movieName = movieName + "+" + nodeArgs[i];
-            console.log(movieName)
-            console.log(i)
-        }
-        else {
-            movieName += nodeArgs[i];
+    if (!movie) {
+        movieName = movieDefault;
+    }
+    else {
+        for (var i = 3; i < nodeArgs.length; i++) {
+            if (i > 3 && i < nodeArgs.length) {
+                movieName = movieName + "+" + nodeArgs[i];
+                console.log(movieName)
+                // console.log(i)
+            }
+            else {
+                movieName += nodeArgs[i];
+            }
         }
     }
 
     var queryURL = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
     // var queryURL = "http://www.omdbapi.com/?t=forrest+gump&y=&plot=short&apikey=trilogy";
-    console.log("queryURL: " + queryURL);
+    // console.log("queryURL: " + queryURL);
 
     request(queryURL, function (error, response, body) {
         if (error || response.statusCode !== 200) {
@@ -94,7 +119,8 @@ function getMovie() {
         else {
             var data = JSON.parse(body);
             if (!data.Title) {
-                console.log("No Movie! Try Again...");
+                movieName = movieDefault;
+                // console.log("No Movie! Try Again...");
             }
             else {
                 // console.log(JSON.parse(body));
