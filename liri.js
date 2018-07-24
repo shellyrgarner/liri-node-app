@@ -1,13 +1,13 @@
 require("dotenv").config();
 var keys = require("./keys.js");
-var spotify = require('node-spotify-api');
-var twitter = require('twitter');
+var Spotify = require('node-spotify-api');
+var Twitter = require('twitter');
 var request = require('request'); //omdb
 var fs = require("fs");
 
-var spotify = new spotify(keys.spotify);
-var client = new twitter(keys.twitter);
-// console.log(keys.spotify);
+var spotify = new Spotify(keys.spotify);
+var client = new Twitter(keys.twitter);
+console.log(keys.spotify);
 // console.log(keys.twitter);
 
 var command = process.argv[2];
@@ -78,9 +78,14 @@ function getSpotify() {
             console.log("Error Occurred: " + err);
         }
         else {
-            console.log("data: " + data);
-            console.log(data);
-            // console.log(response);
+            var newData = JSON.stringify(data);
+
+            var songInfo = data.tracks.items[0];
+            // console.log(JSON.parse(JSON.stringify(data)));
+            console.log("Artist: " + songInfo.artists[0].name);
+            console.log("Song: " + songInfo.name);
+            console.log("Preview: " +  songInfo.preview_url);
+            console.log("Album: " +  songInfo.album.name );
         }
     });
 }
