@@ -55,7 +55,7 @@ function getSpotify() {
     var search = "";
     var song = process.argv[3];
     var songDefault = "The Sign Ace of Base";
-    if (!song) {
+    if (!song)  {
         search = songDefault;
         // console.log(search);
     }
@@ -84,8 +84,8 @@ function getSpotify() {
             // console.log(JSON.parse(JSON.stringify(data)));
             console.log("Artist: " + songInfo.artists[0].name);
             console.log("Song: " + songInfo.name);
-            console.log("Preview: " +  songInfo.preview_url);
-            console.log("Album: " +  songInfo.album.name );
+            console.log("Preview: " + songInfo.preview_url);
+            console.log("Album: " + songInfo.album.name);
         }
     });
 }
