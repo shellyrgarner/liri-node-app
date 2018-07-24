@@ -144,7 +144,11 @@ function getRandom() {
             return console.log(error);
         }
         else {
-            console.log(data);
+
+            var dataRandom = data.split(",");
+            getSpotify(dataRandom[0], dataRandom[1]);
+
+            // console.log(data);
         }
     });
 }
